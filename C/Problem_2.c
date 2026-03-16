@@ -7,15 +7,20 @@
 */
 
 
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     struct ListNode *next;
- * };
- */
+
 // 我的解答，节点的 管理/连接 可以用 p+tail ,也可以用 tail+tail->next连接
 // 总而言之，链表一定要有节点连接的过程：tail->next = p, tail = p;
+
+
+// Definition for singly-linked list.
+
+#include<stdio.h>
+struct ListNode {
+    int val;
+    struct ListNode *next;
+};
+
+
 struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
     int carry = 0;
     struct ListNode *p1 = l1;
@@ -74,6 +79,41 @@ struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
         p->next = NULL;
         tail->next = p;
         tail = p;
+    }
+    return head;
+}
+
+// 官方解法：
+
+struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
+    struct ListNode *head = NULL, *tail = NULL;
+    int carry = 0;
+    while (l1 || l2) {
+        int n1 = l1 ? l1->val : 0;
+        int n2 = l2 ? l2->val : 0;
+        int sum = n1 + n2 + carry;
+        if (!head) {
+            head = tail = malloc(sizeof(struct ListNode));
+            tail->val = sum % 10;
+            tail->next = NULL;
+        } else {
+            tail->next = malloc(sizeof(struct ListNode));
+            tail->next->val = sum % 10;
+            tail = tail->next;
+            tail->next = NULL;
+        }
+        carry = sum / 10;
+        if (l1) {
+            l1 = l1->next;
+        }
+        if (l2) {
+            l2 = l2->next;
+        }
+    }
+    if (carry > 0) {
+        tail->next = malloc(sizeof(struct ListNode));
+        tail->next->val = carry;
+        tail->next->next = NULL;
     }
     return head;
 }
