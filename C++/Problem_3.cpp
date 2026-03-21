@@ -1,3 +1,12 @@
+/*
+3. 无重复字符的最长子串
+
+给定一个字符串 s ，请你找出其中不含有重复字符的 最长 子串 的长度
+
+
+*/
+
+// hashtable
 #include<iostream>
 #include<vector>
 #include<unordered_map>
